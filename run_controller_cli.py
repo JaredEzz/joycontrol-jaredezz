@@ -306,22 +306,22 @@ async def run_auto_host(controller_state: ControllerState):
 
     # go all the way down
     await button_push(controller_state, 'down', sec=2.5)
-    await asyncio.sleep(0.2)
+    await asyncio.sleep(0.1)
     #system
     await button_push(controller_state, 'right')
     #date & time menu
     for _ in range(4):
         await button_push(controller_state, 'down')
-        await asyncio.sleep(0.1)
+        await asyncio.sleep(0.08)
     await button_push(controller_state, 'a')
-    await asyncio.sleep(0.2)
+    await asyncio.sleep(0.1)
 
     #date & time
     for _ in range(2):
         await button_push(controller_state, 'down')
-        await asyncio.sleep(0.1)
+        await asyncio.sleep(0.08)
     await button_push(controller_state, 'a')
-    await asyncio.sleep(0.1)
+    await asyncio.sleep(0.08)
 
 
     #increment year
@@ -331,15 +331,15 @@ async def run_auto_host(controller_state: ControllerState):
     for _ in range(number_days):
         for _ in range(4):
             await button_push(controller_state, 'left')
-            await asyncio.sleep(0.1)
+            await asyncio.sleep(0.08)
         await button_push(controller_state, 'up')
         for _ in range(4):
             await button_push(controller_state, 'right')
-            await asyncio.sleep(0.1)
+            await asyncio.sleep(0.08)
         await button_push(controller_state, 'a')
-        await asyncio.sleep(0.1)
+        await asyncio.sleep(0.08)
         await button_push(controller_state, 'a')
-        await asyncio.sleep(0.1)
+        await asyncio.sleep(0.08)
 
 
 
