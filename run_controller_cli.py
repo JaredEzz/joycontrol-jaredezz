@@ -331,11 +331,11 @@ async def run_auto_host(controller_state: ControllerState):
     for _ in range(number_days):
         for _ in range(4):
             await button_push(controller_state, 'left')
-            await asyncio.sleep(0.08)
+            await asyncio.sleep(0.04)
         await button_push(controller_state, 'up')
         for _ in range(4):
             await button_push(controller_state, 'right')
-            await asyncio.sleep(0.08)
+            await asyncio.sleep(0.04)
         await button_push(controller_state, 'a')
         await asyncio.sleep(0.08)
         await button_push(controller_state, 'a')
