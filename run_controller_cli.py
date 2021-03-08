@@ -339,6 +339,8 @@ async def run_auto_host(controller_state: ControllerState):
         await button_push(controller_state, 'a')
         await asyncio.sleep(0.1)
         await button_push(controller_state, 'a')
+        await asyncio.sleep(0.1)
+
 
 
 #     r, r, d, r, a, d*14, r, d*4, a, d*2, a
