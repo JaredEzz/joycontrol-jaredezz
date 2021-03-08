@@ -8,7 +8,6 @@ import keyboard
 import time
 import shelve
 import board
-import neopixel
 
 from aioconsole import ainput
 
@@ -281,136 +280,18 @@ async def directStateSet(btnTrans, controller_state: ControllerState): #this met
             ControllerCLI._set_stick(RightStick, 'right', None)
             await controller_state.send()
 
-async def directStateUNSet(btnTrans, controller_state: ControllerState): #this method sets button/stick states during recording playback (button RELEASE/ stick CENTER)
-    LeftStick = controller_state.l_stick_state
-    RightStick = controller_state.r_stick_state
-    btnsList = ['x', 'y', 'b', 'a', 'plus', 'minus', 'home', 'capture', 'zl', 'zr', 'l', 'r', 'up', 'down', 'left', 'right']
-    lStickList = ['lStickUp', 'lStickDown', 'lStickL', 'lStickR']
-    rStickList = ['rStickUp', 'rStickDown', 'rStickL', 'rStickR']
-    if btnTrans in btnsList:
-        controller_state.button_state.set_button(btnTrans, pushed=False)
-        await controller_state.send()
-    elif btnTrans in lStickList:
-        ControllerCLI._set_stick(LeftStick, 'center', None)
-        await controller_state.send()
-    elif btnTrans in rStickList:
-        ControllerCLI._set_stick(RightStick, 'center', None)
-        await controller_state.send()
+async def run_auto_host(controller_state: ControllerState):
+    """
+    Auto-Host Rolling
+    Roll N days, host, soft reset and repeat
+    """
+    start_raid_delay = 10
+    number_days = 10
+#     r, r, d, r, a, d*14, r, d*4, a, d*2, a
 
-pixels = neopixel.NeoPixel(board.D12, 6)
+# date skip
+# r, r, u, a*5, a,
 
-async def delete_recording(controller_state: ControllerState): #This method deletes saved recordings
-    if controller_state.get_controller() != Controller.PRO_CONTROLLER:
-        raise ValueError('This script only works with the Pro Controller!')
-    # waits until controller is fully connected
-    await controller_state.connect()
-    savedRecordings = shelve.open('savedRecs', writeback=True)
-    #pixels = neopixel.NeoPixel(board.D12, 6, auto_write=False)
-    recList = list(savedRecordings.keys())
-    pixels.fill((0, 0, 0))
-    pixels.fill((0, 0, 10))
-    pixels.fill((0, 0, 10))
-    print('Saved Recordings:')
-    print(recList)
-    print('Enter the name of the recording you want to delete')
-    print('Then press <enter> to delete.')
-    recordingName = await ainput(prompt='Recording name:')
-    if recordingName in recList:
-        del savedRecordings[recordingName]
-        print('Recording deleted')
-    else:
-        print('Recording name not recognized')
-    pixels.fill((0, 0, 0))
-    pixels.fill((0, 0, 0))
-
-async def recording_playback(controller_state: ControllerState): #This method replays saved recordings
-    if controller_state.get_controller() != Controller.PRO_CONTROLLER:
-        raise ValueError('This script only works with the Pro Controller!')
-    # waits until controller is fully connected
-    await controller_state.connect()
-    savedRecordings = shelve.open('savedRecs', writeback=True)
-    #pixels = neopixel.NeoPixel(board.D12, 6, auto_write=False)
-    LeftStick = controller_state.l_stick_state
-    RightStick = controller_state.r_stick_state
-    recList = list(savedRecordings.keys())
-    print('Saved Recordings:')
-    print(recList)
-    print('Enter the name of the recording you want to playback')
-    print('Then press <enter> to start playback.')
-    recordingName = await ainput(prompt='Recording name:')
-    if recordingName in recList:
-        pixels.fill((0, 0, 0))
-        pixels.fill((0, 10, 0))
-        pixels.fill((0, 10, 0))
-        recording = savedRecordings[recordingName]
-        speed_factor = 1
-        last_time = None
-        for event in recording:
-            if speed_factor > 0 and last_time is not None:
-                time.sleep((event.time - last_time) / speed_factor)
-            last_time = event.time
-            key = event.scan_code or event.name
-            btnTrans = keyToConBtn(key)
-            await directStateSet(btnTrans, controller_state) if event.event_type == keyboard.KEY_DOWN else  await directStateUNSet(btnTrans, controller_state)
-        keyboard.unhook_all()
-        pixels.fill((0, 0, 0))
-        pixels.fill((0, 0, 0))
-        ControllerCLI._set_stick(RightStick, 'center', None)
-        ControllerCLI._set_stick(LeftStick, 'center', None)
-        await controller_state.send()
-    else:
-        print('Recording name not recognized')
-
-async def record_keyboard(controller_state: ControllerState): #this method binds keyboard to conroller and records input for later playback
-    if controller_state.get_controller() != Controller.PRO_CONTROLLER:
-        raise ValueError('This script only works with the Pro Controller!')
-    # waits until controller is fully connected
-    await controller_state.connect()
-    print('Using only letters and numbers, type a name for this recording')
-    print('Then press <enter> to start recording keyboard control.')
-    recordingName = await ainput(prompt='Recording name:')
-    #pixels = neopixel.NeoPixel(board.D12, 6, auto_write=False)
-
-    #button state handler callbacks
-    savedRecordings = shelve.open('savedRecs', writeback=True)
-    LeftStick = controller_state.l_stick_state
-    RightStick = controller_state.r_stick_state
-    bindKeyboard(controller_state)
-    keyboard.start_recording()
-    pixels.fill((0, 0, 0))
-    pixels.fill((10, 0, 0))
-    pixels.fill((10, 0, 0))
-    await ainput(prompt='Press <enter> to stop recording and exit keyboard control.')
-    recording = keyboard.stop_recording()
-    pixels.fill((0, 0, 0))
-    pixels.fill((0, 0, 0))
-
-    keyboard.unhook_all()
-
-    savedRecordings[recordingName] = recording
-    savedRecordings.close()
-
-    ControllerCLI._set_stick(RightStick, 'center', None)
-    ControllerCLI._set_stick(LeftStick, 'center', None)
-    await controller_state.send()
-
-async def keyboard_control(controller_state: ControllerState):# this method binds keyboard to controller for CLI keyboard control of switch
-    if controller_state.get_controller() != Controller.PRO_CONTROLLER:
-        raise ValueError('This script only works with the Pro Controller!')
-    # waits until controller is fully connected
-    await controller_state.connect()
-
-    await ainput(prompt='Press <enter> to start keyboard control.')
-
-    #button state handler callbacks
-    LeftStick = controller_state.l_stick_state
-    RightStick = controller_state.r_stick_state
-    bindKeyboard(controller_state)
-    await ainput(prompt='Press <enter> to exit keyboard control.')
-    keyboard.unhook_all()
-    ControllerCLI._set_stick(RightStick, 'center', None)
-    ControllerCLI._set_stick(LeftStick, 'center', None)
-    await controller_state.send()
 
 
 
@@ -629,6 +510,9 @@ async def _main(args):
             else:
                 await set_nfc(controller_state, args[0])
 
+        async def _run_auto_host():
+            await run_auto_host(controller_state)
+
         cli.add_command('test_buttons', _run_test_controller_buttons)
         cli.add_command('keyboard', _run_keyboard_control)
         cli.add_command('recording', _run_recording_control)
@@ -637,6 +521,8 @@ async def _main(args):
         cli.add_command('mash', call_mash_button)
         # add the script from above
         cli.add_command('nfc', nfc)
+
+        cli.add_command('auto_host', _run_auto_host)
 
 
         if args.nfc is not None:
