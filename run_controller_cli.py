@@ -305,14 +305,33 @@ async def run_auto_host(controller_state: ControllerState):
     await button_push(controller_state, 'a')
 
     # go all the way down
-    await button_push(controller_state, 'down', sec=3)
+    await button_push(controller_state, 'down', sec=2.5)
     await asyncio.sleep(0.3)
     #system
     await button_push(controller_state, 'right')
-    #date & time
+    #date & time menu
     for _ in range(4):
         await button_push(controller_state, 'down')
         await asyncio.sleep(0.1)
+    await button_push(controller_state, 'a')
+    #date & time
+    for _ in range(2):
+        await button_push(controller_state, 'down')
+        await asyncio.sleep(0.1)
+    await button_push(controller_state, 'a')
+
+    #increment year
+    # go all the way right
+    await button_push(controller_state, 'right', sec=1)
+
+    for _ in range(4):
+        await button_push(controller_state, 'left')
+        await asyncio.sleep(0.1)
+    await button_push(controller_state, 'up')
+    for _ in range(4):
+        await button_push(controller_state, 'right')
+        await asyncio.sleep(0.1)
+    await button_push(controller_state, 'a')
     await button_push(controller_state, 'a')
 
 
