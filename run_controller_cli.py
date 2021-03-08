@@ -296,7 +296,9 @@ async def run_auto_host(controller_state: ControllerState):
 
     # skip a day
 
-    #navigate to settings menu
+    #navigate to settings menub
+
+    await button_push(controller_state, 'up')
     await button_push(controller_state, 'right')
     await button_push(controller_state, 'right')
     await button_push(controller_state, 'down')
