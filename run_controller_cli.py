@@ -306,7 +306,7 @@ async def run_auto_host(controller_state: ControllerState):
 
     # go all the way down
     await button_push(controller_state, 'down', sec=2.5)
-    await asyncio.sleep(0.3)
+    await asyncio.sleep(0.2)
     #system
     await button_push(controller_state, 'right')
     #date & time menu
@@ -328,16 +328,17 @@ async def run_auto_host(controller_state: ControllerState):
     # go all the way right
     await button_push(controller_state, 'right', sec=1)
 
-    for _ in range(4):
-        await button_push(controller_state, 'left')
+    for _ in range(number_days):
+        for _ in range(4):
+            await button_push(controller_state, 'left')
+            await asyncio.sleep(0.1)
+        await button_push(controller_state, 'up')
+        for _ in range(4):
+            await button_push(controller_state, 'right')
+            await asyncio.sleep(0.1)
+        await button_push(controller_state, 'a')
         await asyncio.sleep(0.1)
-    await button_push(controller_state, 'up')
-    for _ in range(4):
-        await button_push(controller_state, 'right')
-        await asyncio.sleep(0.1)
-    await button_push(controller_state, 'a')
-    await asyncio.sleep(0.1)
-    await button_push(controller_state, 'a')
+        await button_push(controller_state, 'a')
 
 
 #     r, r, d, r, a, d*14, r, d*4, a, d*2, a
