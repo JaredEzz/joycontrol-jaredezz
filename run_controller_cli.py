@@ -552,7 +552,7 @@ async def _main(args):
         # add the script from above
         cli.add_command('nfc', nfc)
 
-        cli.add_command('auto_host', _run_auto_host)
+        cli.add_command('host', _run_auto_host)
 
 
         if args.nfc is not None:
