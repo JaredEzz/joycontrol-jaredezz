@@ -314,11 +314,15 @@ async def run_auto_host(controller_state: ControllerState):
         await button_push(controller_state, 'down')
         await asyncio.sleep(0.1)
     await button_push(controller_state, 'a')
+    await asyncio.sleep(0.2)
+
     #date & time
     for _ in range(2):
         await button_push(controller_state, 'down')
         await asyncio.sleep(0.1)
     await button_push(controller_state, 'a')
+    await asyncio.sleep(0.1)
+
 
     #increment year
     # go all the way right
