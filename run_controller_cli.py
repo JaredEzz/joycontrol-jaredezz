@@ -287,6 +287,23 @@ async def run_auto_host(controller_state: ControllerState):
     """
     start_raid_delay = 10
     number_days = 10
+
+    if controller_state.get_controller() != Controller.PRO_CONTROLLER:
+        raise ValueError('This script only works with the Pro Controller!')
+
+    # waits until controller is fully connected
+    await controller_state.connect()
+
+    # skip a day
+
+    #navigate to settings menu
+    await button_push(controller_state, 'right')
+    await button_push(controller_state, 'right')
+    await button_push(controller_state, 'down')
+    await button_push(controller_state, 'right')
+    await button_push(controller_state, 'a')
+
+
 #     r, r, d, r, a, d*14, r, d*4, a, d*2, a
 
 # date skip
