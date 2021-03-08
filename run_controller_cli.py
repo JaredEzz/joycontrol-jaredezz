@@ -298,8 +298,8 @@ async def run_auto_host(controller_state: ControllerState):
 
     #navigate to settings menu
 
-    await button_push(controller_state, 'b')
     await button_push(controller_state, 'right')
+    await button_push(controller_state, 'b')
     await button_push(controller_state, 'right')
     await button_push(controller_state, 'down')
     await button_push(controller_state, 'right')
