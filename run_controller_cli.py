@@ -305,9 +305,8 @@ async def run_auto_host(controller_state: ControllerState):
     await button_push(controller_state, 'a')
 
     # go all the way down
-    for _ in range(14):
-        await button_push(controller_state, 'down')
-        await asyncio.sleep(0.1)
+    await button_push(controller_state, 'down', sec=3)
+    await asyncio.sleep(0.3)
     #system
     await button_push(controller_state, 'right')
     #date & time
