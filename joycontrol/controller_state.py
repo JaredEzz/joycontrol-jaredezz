@@ -202,6 +202,7 @@ async def button_push(controller_state, *buttons, sec=0.1):
     await asyncio.sleep(sec)
 
     for button in buttons:
+        print(button)
         # release button
         button_state.set_button(button, pushed=False)
 

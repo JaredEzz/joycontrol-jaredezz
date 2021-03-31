@@ -56,118 +56,167 @@ Options:
     --nfc <nfc_data_file>                   Sets the nfc data of the controller to a given nfc dump upon initial
                                             connection.
 """
-def keyToConBtn(key): #this method translates recorded key events to respective controller buttons pressed for recording playback
+
+
+def keyToConBtn(
+        key):  # this method translates recorded key events to respective controller buttons pressed for recording playback
     namedKey = None
-    keyBinding = {'q': 'left', 'w': 'lStickUp', 'e': 'up', 'r': 'zl', 't': 'l', 'y': 'r', 'u': 'zr', 'i': 'rStickUp', 'a': 'lStickL', 's': 'lStickDown', 'd': 'lStickR', 'f': 'right', 'g': 'capture', 'h': 'home', 'j': 'rStickL', 'k': 'rStickDown', 'l':  'rStickR', 'c': 'down', 'up': 'x', 'down': 'b', 'left': 'y', 'right': 'a', '-': 'minus', '+': 'plus'}
-    testKeys = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'c', 'up', 'down', 'left', 'right', '+', '-']
+    keyBinding = {'q': 'left', 'w': 'lStickUp', 'e': 'up', 'r': 'zl', 't': 'l', 'y': 'r', 'u': 'zr', 'i': 'rStickUp',
+                  'a': 'lStickL', 's': 'lStickDown', 'd': 'lStickR', 'f': 'right', 'g': 'capture', 'h': 'home',
+                  'j': 'rStickL', 'k': 'rStickDown', 'l': 'rStickR', 'c': 'down', 'up': 'x', 'down': 'b', 'left': 'y',
+                  'right': 'a', '-': 'minus', '+': 'plus'}
+    testKeys = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'c', 'up', 'down',
+                'left', 'right', '+', '-']
     for testKey in testKeys:
         testKeyCode = keyboard.key_to_scan_codes(testKey)
-        #print('testKeyCode:')
-        #print(testKeyCode)
+        # print('testKeyCode:')
+        # print(testKeyCode)
         if testKeyCode[0] == key:
             namedKey = testKey
-            #print('namedKey:')
-            #print(namedKey)
+            # print('namedKey:')
+            # print(namedKey)
     if namedKey in keyBinding:
         conBtnPressed = keyBinding[namedKey]
         return conBtnPressed
 
-def bindKeyboard(controller_state: ControllerState):#this method binds specific keys to each button on the pro controller for keyboard control
-    #callbacks:
+
+def bindKeyboard(
+        controller_state: ControllerState):  # this method binds specific keys to each button on the pro controller for keyboard control
+    # callbacks:
     def APress(self):
         controller_state.button_state.set_button('a')
+
     def AUnpress(self):
         controller_state.button_state.set_button('a', pushed=False)
+
     def BPress(self):
         controller_state.button_state.set_button('b')
+
     def BUnpress(self):
         controller_state.button_state.set_button('b', pushed=False)
+
     def XPress(self):
         controller_state.button_state.set_button('x')
+
     def XUnpress(self):
         controller_state.button_state.set_button('x', pushed=False)
+
     def YPress(self):
         controller_state.button_state.set_button('y')
+
     def YUnpress(self):
         controller_state.button_state.set_button('y', pushed=False)
+
     def UPPress(self):
         controller_state.button_state.set_button('up')
+
     def UPUnpress(self):
         controller_state.button_state.set_button('up', pushed=False)
+
     def DOWNPress(self):
         controller_state.button_state.set_button('down')
+
     def DOWNUnpress(self):
         controller_state.button_state.set_button('down', pushed=False)
+
     def LEFTPress(self):
         controller_state.button_state.set_button('left')
+
     def LEFTUnpress(self):
         controller_state.button_state.set_button('left', pushed=False)
+
     def RIGHTPress(self):
         controller_state.button_state.set_button('right')
+
     def RIGHTUnpress(self):
         controller_state.button_state.set_button('right', pushed=False)
+
     def PLUSPress(self):
         controller_state.button_state.set_button('plus')
+
     def PLUSUnpress(self):
         controller_state.button_state.set_button('plus', pushed=False)
+
     def MINUSPress(self):
         controller_state.button_state.set_button('minus')
+
     def MINUSUnpress(self):
         controller_state.button_state.set_button('minus', pushed=False)
+
     def HOMEPress(self):
         controller_state.button_state.set_button('home')
+
     def HOMEUnpress(self):
         controller_state.button_state.set_button('home', pushed=False)
+
     def CAPPress(self):
         controller_state.button_state.set_button('capture')
+
     def CAPUnpress(self):
         controller_state.button_state.set_button('capture', pushed=False)
+
     def LBUMPPress(self):
         controller_state.button_state.set_button('l')
+
     def LBUMPUnpress(self):
         controller_state.button_state.set_button('l', pushed=False)
+
     def RBUMPPress(self):
         controller_state.button_state.set_button('r')
+
     def RBUMPUnpress(self):
         controller_state.button_state.set_button('r', pushed=False)
+
     def ZLPress(self):
         controller_state.button_state.set_button('zl')
+
     def ZLUnpress(self):
         controller_state.button_state.set_button('zl', pushed=False)
+
     def ZRPress(self):
         controller_state.button_state.set_button('zr')
+
     def ZRUnpress(self):
         controller_state.button_state.set_button('zr', pushed=False)
 
         # Stick state handler callbacks
+
     LeftStick = controller_state.l_stick_state
     RightStick = controller_state.r_stick_state
 
     def UpLStickPress(self):
         ControllerCLI._set_stick(LeftStick, 'up', None)
+
     def DownLStickPress(self):
         ControllerCLI._set_stick(LeftStick, 'down', None)
+
     def LeftLStickPress(self):
         ControllerCLI._set_stick(LeftStick, 'left', None)
+
     def RightLStickPress(self):
         ControllerCLI._set_stick(LeftStick, 'right', None)
+
     def LStickUnpress(self):
         ControllerCLI._set_stick(LeftStick, 'center', None)
 
-        #Right Stick
+        # Right Stick
 
     def UpRStickPress(self):
         ControllerCLI._set_stick(RightStick, 'up', None)
+
     def DownRStickPress(self):
         ControllerCLI._set_stick(RightStick, 'down', None)
+
     def LeftRStickPress(self):
         ControllerCLI._set_stick(RightStick, 'left', None)
+
     def RightRStickPress(self):
         ControllerCLI._set_stick(RightStick, 'right', None)
+
     def RStickUnpress(self):
         ControllerCLI._set_stick(RightStick, 'center', None)
 
-    #key listeners
+    # key listeners
     keyboard.on_press_key('q', LEFTPress)
     keyboard.on_release_key('q', LEFTUnpress)
 
@@ -240,20 +289,23 @@ def bindKeyboard(controller_state: ControllerState):#this method binds specific 
     keyboard.on_press_key('right', APress)
     keyboard.on_release_key('right', AUnpress)
     print(' ')
-    #print('keys bound')
+    # print('keys bound')
 
-async def directStateSet(btnTrans, controller_state: ControllerState): #this method sets button/stick states during recording playback (button PRESS/ stick UDLR)
+
+async def directStateSet(btnTrans,
+                         controller_state: ControllerState):  # this method sets button/stick states during recording playback (button PRESS/ stick UDLR)
     LeftStick = controller_state.l_stick_state
     RightStick = controller_state.r_stick_state
-    btnsList = ['x', 'y', 'b', 'a', 'plus', 'minus', 'home', 'capture', 'zl', 'zr', 'l', 'r', 'up', 'down', 'left', 'right']
+    btnsList = ['x', 'y', 'b', 'a', 'plus', 'minus', 'home', 'capture', 'zl', 'zr', 'l', 'r', 'up', 'down', 'left',
+                'right']
     lStickList = ['lStickUp', 'lStickDown', 'lStickL', 'lStickR']
     rStickList = ['rStickUp', 'rStickDown', 'rStickL', 'rStickR']
     if btnTrans in btnsList:
-        #print(btnTrans)
+        # print(btnTrans)
         controller_state.button_state.set_button(btnTrans)
         await controller_state.send()
     elif btnTrans in lStickList:
-        #print(btnTrans)
+        # print(btnTrans)
         if btnTrans == 'lStickDown':
             ControllerCLI._set_stick(LeftStick, 'down', None)
             await controller_state.send()
@@ -280,13 +332,13 @@ async def directStateSet(btnTrans, controller_state: ControllerState): #this met
             ControllerCLI._set_stick(RightStick, 'right', None)
             await controller_state.send()
 
-async def run_auto_host(controller_state: ControllerState):
+
+async def date_skipper(controller_state: ControllerState):
     """
-    Auto-Host Rolling
-    Roll N days, host, soft reset and repeat
+    Date-Skipper
+    Skip N days
     """
-    start_raid_delay = 10
-    number_days = 10
+    number_days = 4580
 
     if controller_state.get_controller() != Controller.PRO_CONTROLLER:
         raise ValueError('This script only works with the Pro Controller!')
@@ -296,7 +348,7 @@ async def run_auto_host(controller_state: ControllerState):
 
     # skip a day
 
-    #navigate to settings menu
+    # navigate to settings menu
     await button_push(controller_state, 'right')
     await button_push(controller_state, 'b')
     await button_push(controller_state, 'right')
@@ -307,28 +359,28 @@ async def run_auto_host(controller_state: ControllerState):
     # go all the way down
     await button_push(controller_state, 'down', sec=2.5)
     await asyncio.sleep(0.1)
-    #system
+    # system
     await button_push(controller_state, 'right')
-    #date & time menu
+    # date & time menu
     for _ in range(4):
         await button_push(controller_state, 'down')
         await asyncio.sleep(0.08)
     await button_push(controller_state, 'a')
-    await asyncio.sleep(0.1)
+    await asyncio.sleep(0.2)
 
-    #date & time
+    # date & time
     for _ in range(2):
         await button_push(controller_state, 'down')
         await asyncio.sleep(0.08)
     await button_push(controller_state, 'a')
     await asyncio.sleep(0.08)
 
-
-    #increment year
+    # increment year
     # go all the way right
     await button_push(controller_state, 'right', sec=1)
 
-    for _ in range(number_days):
+    for i in range(number_days):
+        print(str(i) + "/" + str(number_days))
         for _ in range(4):
             await button_push(controller_state, 'left')
             await asyncio.sleep(0.04)
@@ -338,20 +390,385 @@ async def run_auto_host(controller_state: ControllerState):
             await asyncio.sleep(0.04)
         await button_push(controller_state, 'a')
         await asyncio.sleep(0.08)
+
+        if ((i + 1) % 30) == 0:
+            await button_push(controller_state, 'up')
+            await asyncio.sleep(0.04)
+            await button_push(controller_state, 'up')
+            await asyncio.sleep(0.04)
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(0.1)
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(0.1)
+            await button_push(controller_state, 'down')
+            await asyncio.sleep(0.04)
+            await button_push(controller_state, 'down')
+            await asyncio.sleep(0.04)
+
         await button_push(controller_state, 'a')
         await asyncio.sleep(0.08)
 
 
+async def run_auto_host(controller_state: ControllerState):
+    """
+    Auto-Host Rolling
+    Roll N days, host, soft reset and repeat
+    """
+    frames_away = 3
 
-#     r, r, d, r, a, d*14, r, d*4, a, d*2, a
+    if controller_state.get_controller() != Controller.PRO_CONTROLLER:
+        raise ValueError('This script only works with the Pro Controller!')
 
-# date skip
-# r, r, u, a*5, a,
+    # waits until controller is fully connected
+    await controller_state.connect()
+
+    # start at the den
+
+    while True:
+        for _ in range(frames_away):
+            # start inviting
+            print("start inviting")
+            await button_push(controller_state, 'a')
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(1.0)
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(0.5)
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(0.5)
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(2.0)
+
+            # date skip
+            print("date skip")
+            await button_push(controller_state, 'home')
+            await asyncio.sleep(0.4)
+
+            # navigate to settings menu
+            print("navigate to settings menu")
+            await button_push(controller_state, 'right')
+            await button_push(controller_state, 'b')
+            await button_push(controller_state, 'right')
+            await button_push(controller_state, 'down')
+            await button_push(controller_state, 'right')
+            await button_push(controller_state, 'a')
+
+            # go all the way down
+            print("go all the way down")
+            await button_push(controller_state, 'down', sec=2.5)
+            # system
+            await button_push(controller_state, 'a')
+            # date & time menu
+            for _ in range(4):
+                await button_push(controller_state, 'down')
+                await asyncio.sleep(0.08)
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(0.1)
+
+            # date & time
+            for _ in range(3):
+                await button_push(controller_state, 'down')
+                await asyncio.sleep(0.08)
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(0.08)
+
+            # increment year
+            print("increment year")
+
+            await button_push(controller_state, 'right')
+            await button_push(controller_state, 'y')
+            await button_push(controller_state, 'right')
+            await button_push(controller_state, 'y')
+            await button_push(controller_state, 'up')
+            await button_push(controller_state, 'a')
+            await button_push(controller_state, 'y')
+            await button_push(controller_state, 'a')
+            await button_push(controller_state, 'y')
+            await button_push(controller_state, 'a')
+            await button_push(controller_state, 'y')
+            await button_push(controller_state, 'a')
+            await button_push(controller_state, 'y')
+            await button_push(controller_state, 'a')
+
+            # go back to game
+            print("go back to game")
+            await asyncio.sleep(0.08)
+            await button_push(controller_state, 'home')
+            await asyncio.sleep(1)
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(1.5)
+
+            # quit lobby
+            print("quit lobby")
+            await button_push(controller_state, 'down')
+            await asyncio.sleep(0.08)
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(1.2)
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(4)
+
+        # collect watts
+        print("collect watts")
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(1.0)
+        await button_push(controller_state, 'b')
+        await asyncio.sleep(1.0)
+        await button_push(controller_state, 'b')
+        await asyncio.sleep(1.6)
+        await button_push(controller_state, 'b')
+        await asyncio.sleep(1.0)
+
+        # connect to internet
+        print("connect to internet")
+        await button_push(controller_state, 'y')
+        await asyncio.sleep(1.0)
+        await button_push(controller_state, 'plus')
+        await asyncio.sleep(7.0)
+        await button_push(controller_state, 'b')
+        await asyncio.sleep(0.5)
+        await button_push(controller_state, 'b')
+        await asyncio.sleep(1.0)
+
+        # start raid
+        print("start raid")
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(7)
+
+        # enter code 1454-4444
+        # print("enter code")
+        # await button_push(controller_state, 'plus')
+        # await asyncio.sleep(1.0)
+        # await button_push(controller_state, 'a')  # 1
+        # await button_push(controller_state, 'down')
+        # await button_push(controller_state, 'a')  # 4
+        # await button_push(controller_state, 'right')
+        # await button_push(controller_state, 'a')  # 5
+        # await button_push(controller_state, 'left')
+        # await button_push(controller_state, 'a')  # 4
+        # await button_push(controller_state, 'l')
+        # await button_push(controller_state, 'a')  # 4
+        # await button_push(controller_state, 'l')
+        # await button_push(controller_state, 'a')  # 4
+        # await button_push(controller_state, 'l')
+        # await button_push(controller_state, 'a')  # 4
+        # await button_push(controller_state, 'l')
+        # await button_push(controller_state, 'a')  # 4
+        # await button_push(controller_state, 'plus')
+        # await asyncio.sleep(1)
+        # await button_push(controller_state, 'a')
+        # await asyncio.sleep(0.2)
+        # await button_push(controller_state, 'a')
+        # await asyncio.sleep(0.2)
+        # await button_push(controller_state, 'a')
+        # await asyncio.sleep(0.2)
+        # await button_push(controller_state, 'a')
+        # await asyncio.sleep(0.2)
+        # await button_push(controller_state, 'a')
+
+        # enter code 1456-5555
+        print("enter code")
+        await button_push(controller_state, 'plus')
+        await asyncio.sleep(1.0)
+        await button_push(controller_state, 'a')  # 1
+        await button_push(controller_state, 'down')
+        await button_push(controller_state, 'a')  # 4
+        await button_push(controller_state, 'right')
+        await button_push(controller_state, 'a')  # 5
+        await button_push(controller_state, 'down')
+        await button_push(controller_state, 'a')  # 6
+        await button_push(controller_state, 'left')
+        await button_push(controller_state, 'a')  # 5
+        await button_push(controller_state, 'l')
+        await button_push(controller_state, 'a')  # 5
+        await button_push(controller_state, 'l')
+        await button_push(controller_state, 'a')  # 5
+        await button_push(controller_state, 'l')
+        await button_push(controller_state, 'a')  # 5
+        await button_push(controller_state, 'plus')
+        await asyncio.sleep(1)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.2)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.2)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.2)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.2)
+        await button_push(controller_state, 'a')
+
+        # wait for lobby to fill
+        print("wait for lobby to fill")
+        # await asyncio.sleep(65)  # FIXME
+        await asyncio.sleep(6)
+        await button_push(controller_state, 'home')
+        await asyncio.sleep(1)
+        await button_push(controller_state, 'up')
+        await asyncio.sleep(0.5)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.4)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.1)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.1)
+        for _ in range(22):
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(1)
+
+        await button_push(controller_state, 'home')
+        await asyncio.sleep(1.5)
+        await button_push(controller_state, 'home')
+        await asyncio.sleep(35)
+        # add friends while waiting
+
+        # start raid
+        print("start raid")
+        await button_push(controller_state, 'up')
+        await asyncio.sleep(0.1)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.4)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.4)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.4)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.4)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.4)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.4)
+        await button_push(controller_state, 'a')
+        # keep mashing in case someone hasn't readied up
+        for _ in range(35):
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(1)
 
 
+        # close game
+        print("close game")
+        # await asyncio.sleep(15)
+        await button_push(controller_state, 'home')
+        await asyncio.sleep(1)
+        await button_push(controller_state, 'x')
+        await asyncio.sleep(0.1)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(4)
 
+        # reset time
+        print("reset time")
 
-async def test_controller_buttons(controller_state: ControllerState): #this method navigates to the "Test Controller Buttons" menu and presses all buttons.
+        # navigate to settings menu
+        await button_push(controller_state, 'right')
+        await button_push(controller_state, 'b')
+        await button_push(controller_state, 'right')
+        await button_push(controller_state, 'down')
+        await button_push(controller_state, 'right')
+        await button_push(controller_state, 'a')
+        # go all the way down
+        await button_push(controller_state, 'down', sec=2.5)
+        await asyncio.sleep(0.1)
+        # system
+        await button_push(controller_state, 'right')
+        # date & time menu
+        for _ in range(4):
+            await button_push(controller_state, 'down')
+            await asyncio.sleep(0.08)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.2)
+
+        # turn on & off sync clock
+        print("turn on & off sync clock")
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.08)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.08)
+        await button_push(controller_state, 'home')
+        await asyncio.sleep(1.5)
+
+        # start up game again, wait, and mash through until in front of den
+        print("start up game again, wait, and mash through until in front of den")
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(18)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(3.5)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(8)
+
+async def date_skipper1(controller_state: ControllerState):
+    """
+    Date-Skipper
+    Skip N days
+    """
+    number_days = 255
+
+    if controller_state.get_controller() != Controller.PRO_CONTROLLER:
+        raise ValueError('This script only works with the Pro Controller!')
+
+    # waits until controller is fully connected
+    await controller_state.connect()
+
+    # skip a day
+
+    # navigate to settings menu
+    await button_push(controller_state, 'right')
+    await button_push(controller_state, 'b')
+    await button_push(controller_state, 'right')
+    await button_push(controller_state, 'down')
+    await button_push(controller_state, 'right')
+    await button_push(controller_state, 'a')
+
+    # go all the way down
+    await button_push(controller_state, 'down', sec=2.5)
+    await asyncio.sleep(0.1)
+    # system
+    await button_push(controller_state, 'right')
+    # date & time menu
+    for _ in range(4):
+        await button_push(controller_state, 'down')
+        await asyncio.sleep(0.08)
+    await button_push(controller_state, 'a')
+    await asyncio.sleep(0.2)
+
+    # date & time
+    for _ in range(2):
+        await button_push(controller_state, 'down')
+        await asyncio.sleep(0.08)
+    await button_push(controller_state, 'a')
+    await asyncio.sleep(0.08)
+
+    # increment year
+    # go all the way right
+    await button_push(controller_state, 'right', sec=1)
+
+    for i in range(number_days):
+        print(str(i) + "/" + str(number_days))
+        for _ in range(4):
+            await button_push(controller_state, 'left')
+            await asyncio.sleep(0.04)
+        await button_push(controller_state, 'up')
+        for _ in range(4):
+            await button_push(controller_state, 'right')
+            await asyncio.sleep(0.04)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.08)
+
+        if ((i + 1) % 30) == 0:
+            await button_push(controller_state, 'up')
+            await asyncio.sleep(0.04)
+            await button_push(controller_state, 'up')
+            await asyncio.sleep(0.04)
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(0.1)
+            await button_push(controller_state, 'a')
+            await asyncio.sleep(0.1)
+            await button_push(controller_state, 'down')
+            await asyncio.sleep(0.04)
+            await button_push(controller_state, 'down')
+            await asyncio.sleep(0.04)
+
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.08)
+
+async def friend_remover(
+        controller_state: ControllerState):
     """
     Example controller script.
     Navigates to the "Test Controller Buttons" menu and presses all buttons.
@@ -362,8 +779,6 @@ async def test_controller_buttons(controller_state: ControllerState): #this meth
     # waits until controller is fully connected
     await controller_state.connect()
 
-    await ainput(prompt='Make sure the Switch is in the Home menu and press <enter> to continue.')
-
     """
     # We assume we are in the "Change Grip/Order" menu of the switch
     await button_push(controller_state, 'home')
@@ -371,66 +786,23 @@ async def test_controller_buttons(controller_state: ControllerState): #this meth
     # wait for the animation
     await asyncio.sleep(1)
     """
+    num_friends = 100
 
-    # Goto settings
-    await button_push(controller_state, 'down', sec=1)
-    await button_push(controller_state, 'right', sec=2)
-    await asyncio.sleep(0.3)
-    await button_push(controller_state, 'left')
-    await asyncio.sleep(0.3)
-    await button_push(controller_state, 'a')
-    await asyncio.sleep(0.3)
+    # Remove friends
+    for i in range(num_friends):
+        print(str(i)+"/"+str(num_friends))
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.5)
+        await button_push(controller_state, 'down')
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.5)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(0.5)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(8)
+        await button_push(controller_state, 'a')
+        await asyncio.sleep(1.4)
 
-    # go all the way down
-    await button_push(controller_state, 'down', sec=4)
-    await asyncio.sleep(0.3)
-
-    # goto "Controllers and Sensors" menu
-    for _ in range(2):
-        await button_push(controller_state, 'up')
-        await asyncio.sleep(0.3)
-    await button_push(controller_state, 'right')
-    await asyncio.sleep(0.3)
-
-    # go all the way down
-    await button_push(controller_state, 'down', sec=3)
-    await asyncio.sleep(0.3)
-
-    # goto "Test Input Devices" menu
-    await button_push(controller_state, 'up')
-    await asyncio.sleep(0.3)
-    await button_push(controller_state, 'a')
-    await asyncio.sleep(0.3)
-
-    # goto "Test Controller Buttons" menu
-    await button_push(controller_state, 'a')
-    await asyncio.sleep(0.3)
-
-    # push all buttons except home and capture
-    button_list = controller_state.button_state.get_available_buttons()
-    if 'capture' in button_list:
-        button_list.remove('capture')
-    if 'home' in button_list:
-        button_list.remove('home')
-
-    user_input = asyncio.ensure_future(
-        ainput(prompt='Pressing all buttons... Press <enter> to stop.')
-    )
-
-    # push all buttons consecutively until user input
-    while not user_input.done():
-        for button in button_list:
-            await button_push(controller_state, button)
-            await asyncio.sleep(0.1)
-
-            if user_input.done():
-                break
-
-    # await future to trigger exceptions in case something went wrong
-    await user_input
-
-    # go back to home
-    await button_push(controller_state, 'home')
 
 
 async def set_nfc(controller_state, file_path):
@@ -496,6 +868,7 @@ async def _main(args):
             test_control - test method that will be removed later
             """
             await test_control(controller_state)
+
         async def _run_keyboard_control():
             """
             keyboard - binds controls to keyboard. Keybinding:
@@ -505,6 +878,7 @@ async def _main(args):
             plus= + minus= -
             """
             await keyboard_control(controller_state)
+
         async def _run_recording_control():
             """
             recording - binds controls to keyboard, and records input until recording stopped.
@@ -528,6 +902,7 @@ async def _main(args):
             delete_rec - select a saved recording and delete it
             """
             await delete_recording(controller_state)
+
         async def _run_test_controller_buttons():
             """
             test_buttons - Navigates to the "Test Controller Buttons" menu and presses all buttons.
@@ -569,6 +944,12 @@ async def _main(args):
         async def _run_auto_host():
             await run_auto_host(controller_state)
 
+        async def _run_date_skipper():
+            await date_skipper(controller_state)
+
+        async def _run_friend_remover():
+            await friend_remover(controller_state)
+
         cli.add_command('test_buttons', _run_test_controller_buttons)
         cli.add_command('keyboard', _run_keyboard_control)
         cli.add_command('recording', _run_recording_control)
@@ -578,8 +959,9 @@ async def _main(args):
         # add the script from above
         cli.add_command('nfc', nfc)
 
+        cli.add_command('skip', _run_date_skipper)
         cli.add_command('host', _run_auto_host)
-
+        cli.add_command('remove', _run_friend_remover)
 
         if args.nfc is not None:
             await nfc(args.nfc)
@@ -597,7 +979,7 @@ if __name__ == '__main__':
         raise PermissionError('Script must be run as root!')
 
     # setup logging
-    #log.configure(console_level=logging.ERROR)
+    # log.configure(console_level=logging.ERROR)
     log.configure()
 
     parser = argparse.ArgumentParser()
