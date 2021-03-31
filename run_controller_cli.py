@@ -533,38 +533,7 @@ async def run_auto_host(controller_state: ControllerState):
         await button_push(controller_state, 'a')
         await asyncio.sleep(7)
 
-        # enter code 1454-4444
-        # print("enter code")
-        # await button_push(controller_state, 'plus')
-        # await asyncio.sleep(1.0)
-        # await button_push(controller_state, 'a')  # 1
-        # await button_push(controller_state, 'down')
-        # await button_push(controller_state, 'a')  # 4
-        # await button_push(controller_state, 'right')
-        # await button_push(controller_state, 'a')  # 5
-        # await button_push(controller_state, 'left')
-        # await button_push(controller_state, 'a')  # 4
-        # await button_push(controller_state, 'l')
-        # await button_push(controller_state, 'a')  # 4
-        # await button_push(controller_state, 'l')
-        # await button_push(controller_state, 'a')  # 4
-        # await button_push(controller_state, 'l')
-        # await button_push(controller_state, 'a')  # 4
-        # await button_push(controller_state, 'l')
-        # await button_push(controller_state, 'a')  # 4
-        # await button_push(controller_state, 'plus')
-        # await asyncio.sleep(1)
-        # await button_push(controller_state, 'a')
-        # await asyncio.sleep(0.2)
-        # await button_push(controller_state, 'a')
-        # await asyncio.sleep(0.2)
-        # await button_push(controller_state, 'a')
-        # await asyncio.sleep(0.2)
-        # await button_push(controller_state, 'a')
-        # await asyncio.sleep(0.2)
-        # await button_push(controller_state, 'a')
-
-        # enter code 1456-5555
+        # enter code
         print("enter code")
         await button_push(controller_state, 'plus')
         await asyncio.sleep(1.0)
@@ -573,16 +542,16 @@ async def run_auto_host(controller_state: ControllerState):
         await button_push(controller_state, 'a')  # 4
         await button_push(controller_state, 'right')
         await button_push(controller_state, 'a')  # 5
-        await button_push(controller_state, 'down')
-        await button_push(controller_state, 'a')  # 6
         await button_push(controller_state, 'left')
-        await button_push(controller_state, 'a')  # 5
+        await button_push(controller_state, 'a')  # 4
         await button_push(controller_state, 'l')
-        await button_push(controller_state, 'a')  # 5
+        await button_push(controller_state, 'a')  # 4
         await button_push(controller_state, 'l')
-        await button_push(controller_state, 'a')  # 5
+        await button_push(controller_state, 'a')  # 4
         await button_push(controller_state, 'l')
-        await button_push(controller_state, 'a')  # 5
+        await button_push(controller_state, 'a')  # 4
+        await button_push(controller_state, 'l')
+        await button_push(controller_state, 'a')  # 4
         await button_push(controller_state, 'plus')
         await asyncio.sleep(1)
         await button_push(controller_state, 'a')
@@ -692,81 +661,6 @@ async def run_auto_host(controller_state: ControllerState):
         await button_push(controller_state, 'a')
         await asyncio.sleep(8)
 
-async def date_skipper1(controller_state: ControllerState):
-    """
-    Date-Skipper
-    Skip N days
-    """
-    number_days = 255
-
-    if controller_state.get_controller() != Controller.PRO_CONTROLLER:
-        raise ValueError('This script only works with the Pro Controller!')
-
-    # waits until controller is fully connected
-    await controller_state.connect()
-
-    # skip a day
-
-    # navigate to settings menu
-    await button_push(controller_state, 'right')
-    await button_push(controller_state, 'b')
-    await button_push(controller_state, 'right')
-    await button_push(controller_state, 'down')
-    await button_push(controller_state, 'right')
-    await button_push(controller_state, 'a')
-
-    # go all the way down
-    await button_push(controller_state, 'down', sec=2.5)
-    await asyncio.sleep(0.1)
-    # system
-    await button_push(controller_state, 'right')
-    # date & time menu
-    for _ in range(4):
-        await button_push(controller_state, 'down')
-        await asyncio.sleep(0.08)
-    await button_push(controller_state, 'a')
-    await asyncio.sleep(0.2)
-
-    # date & time
-    for _ in range(2):
-        await button_push(controller_state, 'down')
-        await asyncio.sleep(0.08)
-    await button_push(controller_state, 'a')
-    await asyncio.sleep(0.08)
-
-    # increment year
-    # go all the way right
-    await button_push(controller_state, 'right', sec=1)
-
-    for i in range(number_days):
-        print(str(i) + "/" + str(number_days))
-        for _ in range(4):
-            await button_push(controller_state, 'left')
-            await asyncio.sleep(0.04)
-        await button_push(controller_state, 'up')
-        for _ in range(4):
-            await button_push(controller_state, 'right')
-            await asyncio.sleep(0.04)
-        await button_push(controller_state, 'a')
-        await asyncio.sleep(0.08)
-
-        if ((i + 1) % 30) == 0:
-            await button_push(controller_state, 'up')
-            await asyncio.sleep(0.04)
-            await button_push(controller_state, 'up')
-            await asyncio.sleep(0.04)
-            await button_push(controller_state, 'a')
-            await asyncio.sleep(0.1)
-            await button_push(controller_state, 'a')
-            await asyncio.sleep(0.1)
-            await button_push(controller_state, 'down')
-            await asyncio.sleep(0.04)
-            await button_push(controller_state, 'down')
-            await asyncio.sleep(0.04)
-
-        await button_push(controller_state, 'a')
-        await asyncio.sleep(0.08)
-
 async def friend_remover(
         controller_state: ControllerState):
     """
@@ -786,7 +680,7 @@ async def friend_remover(
     # wait for the animation
     await asyncio.sleep(1)
     """
-    num_friends = 100
+    num_friends = 50
 
     # Remove friends
     for i in range(num_friends):
