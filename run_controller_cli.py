@@ -338,7 +338,7 @@ async def date_skipper(controller_state: ControllerState):
     Date-Skipper
     Skip N days
     """
-    number_days = 4580
+    number_days = 1550
 
     if controller_state.get_controller() != Controller.PRO_CONTROLLER:
         raise ValueError('This script only works with the Pro Controller!')
