@@ -696,7 +696,7 @@ async def friend_remover(
         await button_push(controller_state, 'a')
         await asyncio.sleep(1.0)
         await button_push(controller_state, 'a')
-        await asyncio.sleep(9)
+        await asyncio.sleep(11)
         await button_push(controller_state, 'a')
         await asyncio.sleep(1.5)
 
