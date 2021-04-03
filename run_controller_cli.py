@@ -543,7 +543,7 @@ async def run_auto_host(controller_state: ControllerState):
         await button_push(controller_state, 'a')  # 4
         await button_push(controller_state, 'right')
         await button_push(controller_state, 'a')  # 5
-        await button_push(controller_state, 'left')
+        await button_push(controller_state, 'down')
         await button_push(controller_state, 'a')  # 4
         await button_push(controller_state, 'l')
         await button_push(controller_state, 'a')  # 4
