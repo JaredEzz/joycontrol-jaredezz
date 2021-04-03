@@ -687,16 +687,18 @@ async def friend_remover(
     for i in range(num_friends):
         print(str(i)+"/"+str(num_friends))
         await button_push(controller_state, 'a')
-        await asyncio.sleep(1.5)
+        await asyncio.sleep(1.0)
         await button_push(controller_state, 'down')
+        await asyncio.sleep(0.5)
+
         await button_push(controller_state, 'a')
-        await asyncio.sleep(1.5)
+        await asyncio.sleep(1.0)
         await button_push(controller_state, 'a')
-        await asyncio.sleep(1.5)
+        await asyncio.sleep(1.0)
         await button_push(controller_state, 'a')
         await asyncio.sleep(9)
         await button_push(controller_state, 'a')
-        await asyncio.sleep(2)
+        await asyncio.sleep(1.5)
 
 
 
