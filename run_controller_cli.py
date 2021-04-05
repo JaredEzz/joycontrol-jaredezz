@@ -338,7 +338,7 @@ async def date_skipper(controller_state: ControllerState):
     Date-Skipper
     Skip N days
     """
-    number_days = 4430
+    number_days = 1880
 
     if controller_state.get_controller() != Controller.PRO_CONTROLLER:
         raise ValueError('This script only works with the Pro Controller!')
@@ -543,7 +543,7 @@ async def run_auto_host(controller_state: ControllerState):
         await button_push(controller_state, 'a')  # 4
         await button_push(controller_state, 'right')
         await button_push(controller_state, 'a')  # 5
-        await button_push(controller_state, 'down')
+        await button_push(controller_state, 'left')
         await button_push(controller_state, 'a')  # 4
         await button_push(controller_state, 'l')
         await button_push(controller_state, 'a')  # 4
@@ -681,7 +681,7 @@ async def friend_remover(
     # wait for the animation
     await asyncio.sleep(1)
     """
-    num_friends = 50
+    num_friends = 200
 
     # Remove friends
     for i in range(num_friends):
