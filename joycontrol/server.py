@@ -105,6 +105,18 @@ async def create_hid_server(protocol_factory, ctl_psm=17, itr_psm=19, device_id=
         hid.pairable(False)
 
     else:
+        try:
+            HidDevice.register_sdp_record(PROFILE_PATH)
+        except dbus.exceptions.DBusException as dbus_err:
+            # Already registered (If multiple controllers are being emulated and this method is called consecutive times)
+            logger.debug(dbus_err)
+
+        # start advertising
+        hid.discoverable()
+
+        # setting bluetooth adapter name and class to the device we wish to emulate
+        await hid.set_name(protocol.controller.device_name())
+        await hid.set_class()
         # Reconnection to reconnect_bt_addr
         client_ctl = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_SEQPACKET, socket.BTPROTO_L2CAP)
         client_itr = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_SEQPACKET, socket.BTPROTO_L2CAP)
