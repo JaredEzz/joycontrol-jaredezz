@@ -84,33 +84,8 @@ async def create_hid_server(protocol_factory, ctl_psm=17, itr_psm=19, device_id=
             # Already registered (If multiple controllers are being emulated and this method is called consecutive times)
             logger.debug(dbus_err)
 
-        try:
-            hid = HidDevice(device_id=device_id)
-
-            ctl_sock.bind((hid.address, ctl_psm))
-            itr_sock.bind((hid.address, itr_psm))
-        except OSError as err:
-            logger.warning(err)
-            # If the ports are already taken, this probably means that the bluez "input" plugin is enabled.
-            logger.warning('Fallback: Restarting bluetooth due to incompatibilities with the bluez "input" plugin. '
-                           'Disable the plugin to avoid issues. See https://github.com/mart1nro/joycontrol/issues/8.')
-            # HACK: To circumvent incompatibilities with the bluetooth "input" plugin, we need to restart Bluetooth here.
-            # The Switch does not connect to the sockets if we don't.
-            # For more info see: https://github.com/mart1nro/joycontrol/issues/8
-            logger.info('Restarting bluetooth service...')
-            await utils.run_system_command('systemctl restart bluetooth.service')
-            await asyncio.sleep(1)
-
-            hid = HidDevice(device_id=device_id)
-
-            ctl_sock.bind((socket.BDADDR_ANY, ctl_psm))
-            itr_sock.bind((socket.BDADDR_ANY, itr_psm))
         # start advertising
         hid.discoverable()
-
-        # setting bluetooth adapter name and class to the device we wish to emulate
-        await hid.set_name(protocol.controller.device_name())
-        await hid.set_class()
 
         logger.info('Waiting for Switch to connect... Please open the "Change Grip/Order" menu.')
 
@@ -126,18 +101,6 @@ async def create_hid_server(protocol_factory, ctl_psm=17, itr_psm=19, device_id=
         hid.pairable(False)
 
     else:
-        try:
-            HidDevice.register_sdp_record(PROFILE_PATH)
-        except dbus.exceptions.DBusException as dbus_err:
-            # Already registered (If multiple controllers are being emulated and this method is called consecutive times)
-            logger.debug(dbus_err)
-
-        # start advertising
-        hid.discoverable()
-
-        # setting bluetooth adapter name and class to the device we wish to emulate
-        await hid.set_name(protocol.controller.device_name())
-        await hid.set_class()
         # Reconnection to reconnect_bt_addr
         client_ctl = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_SEQPACKET, socket.BTPROTO_L2CAP)
         client_itr = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_SEQPACKET, socket.BTPROTO_L2CAP)
