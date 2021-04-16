@@ -414,8 +414,8 @@ async def run_auto_host(controller_state: ControllerState):
     Auto-Host Rolling
     Roll N days, host, soft reset and repeat
     """
-    frames_away = 3
-    # frames_away = 0 # for hardlocking
+    # frames_away = 3
+    frames_away = 0 # for hardlocking
 
     if controller_state.get_controller() != Controller.PRO_CONTROLLER:
         raise ValueError('This script only works with the Pro Controller!')
